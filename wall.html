@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>🎂 歆悦的生日蛋糕墙 🎂</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
+            background: linear-gradient(135deg, #fff0f5 0%, #fffacd 100%);
+            line-height: 1.6;
+            padding: 20px;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding: 20px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(255, 107, 158, 0.2);
+        }
+        
+        h1 {
+            color: #ff6b9d;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .cake-icon {
+            font-size: 48px;
+            margin: 20px 0;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 18px;
+        }
+        
+        .cake-wall {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .cake-layer {
+            background: linear-gradient(135deg, #fff5f7 0%, #fff 100%);
+            border-left: 8px solid #ff6b9d;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .cake-layer:hover {
+            transform: translateX(5px);
+        }
+        
+        .layer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .author {
+            color: #ff6b9d;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .time {
+            color: #999;
+            font-size: 14px;
+        }
+        
+        .impression {
+            color: #666;
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+        
+        .blessing {
+            font-size: 18px;
+            color: #333;
+            line-height: 1.8;
+        }
+        
+        .blessing::before {
+            content: "💌 ";
+        }
+        
+        .add-section {
+            text-align: center;
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .add-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #ff6b9d 0%, #ff8e53 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            margin: 20px 0;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .add-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 157, 0.3);
+        }
+        
+        .instructions {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-top: 30px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .instructions h3 {
+            color: #ff6b9d;
+            margin-bottom: 15px;
+            font-size: 22px;
+        }
+        
+        ol {
+            padding-left: 25px;
+            margin-bottom: 20px;
+        }
+        
+        li {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #555;
+        }
+        
+        .counter {
+            background: #ff6b9d;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            display: inline-block;
+            margin: 15px 0;
+            font-size: 18px;
+        }
+        
+        .refresh-btn {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+            transition: background 0.3s ease;
+        }
+        
+        .refresh-btn:hover {
+            background: #45a049;
+        }
+        
+        footer {
+            text-align: center;
+            color: #999;
+            margin-top: 40px;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 24px;
+            }
+            
+            .cake-icon {
+                font-size: 36px;
+            }
+            
+            .add-btn {
+                padding: 12px 30px;
+                font-size: 18px;
+            }
+            
+            .layer-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .time {
+                margin-top: 5px;
+            }
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+        
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎂 歆悦的生日蛋糕墙 🎂</h1>
+            <div class="cake-icon">🍰🍰🍰</div>
+            <p class="subtitle">每一层蛋糕，都是一份温暖的祝福</p>
+        </header>
+        
+        <div class="cake-wall">
+            <h2 style="color: #ff6b9d; margin-bottom: 25px; text-align: center;">✨ 大家的祝福 ✨</h2>
+            <div id="blessings-container">
+                <div class="loading">
+                    <p>正在加载大家的祝福...</p>
+                    <p style="margin-top: 20px; font-size: 24px;">⏳</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="add-section">
+            <h2 style="color: #ff6b9d; margin-bottom: 20px;">🎁 添加你的祝福</h2>
+            <p style="margin-bottom: 20px; color: #666;">点击下方按钮，为歆悦的生日蛋糕添加一层甜蜜的祝福吧！</p>
+            
+            <!-- 这里要替换成你的腾讯文档编辑链接 -->
+            <a href="YOUR_EDIT_LINK_HERE" class="add-btn" target="_blank">
+                ✨ 我要添加祝福 ✨
+            </a>
+            
+            <p style="margin-top: 20px; color: #888; font-size: 14px;">
+                （点击后会在新窗口打开祝福收集表，填写后记得刷新本页面查看）
+            </p>
+        </div>
+        
+        <div class="instructions">
+            <h3>📝 使用说明</h3>
+            <ol>
+                <li>点击上方粉色按钮，在表格中添加你的祝福</li>
+                <li>填写完成后，点击下方“刷新祝福”按钮更新显示</li>
+                <li>也可以直接刷新整个页面（按F5或浏览器刷新按钮）</li>
+                <li>将本页面链接分享给其他同学，一起为歆悦送祝福</li>
+            </ol>
+            
+            <div style="text-align: center; margin: 25px 0;">
+                <div class="counter">
+                    已有 <span id="blessing-count">0</span> 个祝福
+                </div>
+                <br>
+                <button class="refresh-btn" id="refresh-btn">
+                    🔄 刷新祝福
+                </button>
+            </div>
+            
+            <div id="data-source-info" style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">
+                    <strong>数据来源：</strong>腾讯文档表格
+                </p>
+                <p style="color: #888; font-size: 12px;">
+                    如需修改表格链接，请联系页面管理员
+                </p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>🎉 祝歆悦同学生日快乐！ 🎉</p>
+            <p style="margin-top: 10px;">制作：班级同学 | 更新于 <span id="update-time">-</span></p>
+        </footer>
+    </div>
+    
+    <script>
+        // ============================================
+        // 🔧 这里是需要你修改的配置部分
+        // ============================================
+        
+        // 你的腾讯文档“查看链接”（必须修改！）
+        // 获取方法：打开腾讯文档 → 分享 → 选择“任何人可查看” → 复制链接
+        const TEN_CENT_DOC_VIEW_URL = "https://docs.qq.com/sheet/DU0tzQVp3V0pPdGtB?tab=BB08J2";
+        
+        // 你的腾讯文档“编辑链接”（必须修改！）
+        // 获取方法：打开腾讯文档 → 分享 → 选择“任何人可编辑” → 复制链接
+        const TEN_CENT_DOC_EDIT_URL = "https://docs.qq.com/sheet/DU0tzQVp3V0pPdGtB?tab=BB08J2";
+        
+        // 自动刷新时间（单位：毫秒），默认30秒刷新一次
+        const AUTO_REFRESH_TIME = 30000;
+        
+        // ============================================
+        // 🎂 以下是程序代码，一般不需要修改
+        // ============================================
+        
+        // 更新页面上的编辑链接
+        document.querySelector('.add-btn').href = TEN_CENT_DOC_EDIT_URL;
+        
+        // 获取页面元素
+        const blessingsContainer = document.getElementById('blessings-container');
+        const blessingCountElement = document.getElementById('blessing-count');
+        const refreshButton = document.getElementById('refresh-btn');
+        const updateTimeElement = document.getElementById('update-time');
+        
+        // 祝福数据
+        let blessings = [];
+        
+        // 格式化时间
+        function formatTime(timeStr) {
+            if (!timeStr) return '刚刚';
+            
+            // 如果是今天，显示时间
+            const now = new Date();
+            const date = new Date(timeStr);
+            
+            if (isNaN(date.getTime())) {
+                // 如果不是有效日期，直接返回
+                return timeStr;
+            }
+            
+            // 计算时间差（分钟）
+            const diffMinutes = Math.floor((now - date) / (1000 * 60));
+            
+            if (diffMinutes < 1) {
+                return '刚刚';
+            } else if (diffMinutes < 60) {
+                return `${diffMinutes}分钟前`;
+            } else if (diffMinutes < 24 * 60) {
+                const hours = Math.floor(diffMinutes / 60);
+                return `${hours}小时前`;
+            } else {
+                // 显示日期
+                return date.toLocaleDateString('zh-CN', {
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                }).replace('上午', 'AM').replace('下午', 'PM');
+            }
+        }
+        
+        // 显示祝福
+        function displayBlessings() {
+            if (blessings.length === 0) {
+                blessingsContainer.innerHTML = `
+                    <div class="error">
+                        <p>暂时还没有祝福哦~</p>
+                        <p>点击上方按钮，添加第一个祝福吧！</p>
+                    </div>
+                `;
+                blessingCountElement.textContent = '0';
+                return;
+            }
+            
+            let html = '';
+            
+            // 按时间倒序排列（最新的在最上面）
+            const sortedBlessings = [...blessings].sort((a, b) => {
+                return new Date(b.time || 0) - new Date(a.time || 0);
+            });
+            
+            sortedBlessings.forEach((item, index) => {
+                html += `
+                <div class="cake-layer">
+                    <div class="layer-header">
+                        <div class="author">${item.name || '匿名同学'}</div>
+                        <div class="time">${formatTime(item.time)}</div>
+                    </div>
+                    <div class="impression">
+                        <strong>印象：</strong>${item.impression || '温暖的同学'}
+                    </div>
+                    <div class="blessing">
+                        ${item.blessing || '生日快乐！'}
+                    </div>
+                </div>
+                `;
+            });
+            
+            blessingsContainer.innerHTML = html;
+            blessingCountElement.textContent = blessings.length;
+            
+            // 更新最后刷新时间
+            const now = new Date();
+            updateTimeElement.textContent = now.toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        
+        // 从腾讯文档获取数据（简化版）
+        async function fetchBlessingsFromTencentDoc() {
+            try {
+                // 方法1：尝试使用腾讯文档的导出功能
+                // 将查看链接转换为导出链接
+                const exportUrl = TEN_CENT_DOC_VIEW_URL.replace('/sheet/', '/op/sheet/export?format=csv&id=') + '&share=1';
+                
+                const response = await fetch(exportUrl);
+                
+                if (!response.ok) {
+                    throw new Error('无法连接到腾讯文档');
+                }
+                
+                const csvText = await response.text();
+                
+                // 解析CSV数据（简单解析）
+                const lines = csvText.split('\n').filter(line => line.trim() !== '');
+                const newBlessings = [];
+                
+                // 第一行是表头，从第二行开始
+                for (let i = 1; i < lines.length; i++) {
+                    const cells = lines[i].split(',');
+                    
+                    // 简单处理：前4列分别是昵称、印象、祝福语、时间
+                    if (cells.length >= 3) {
+                        newBlessings.push({
+                            name: cells[0] ? cells[0].trim() : '匿名',
+                            impression: cells[1] ? cells[1].trim() : '',
+                            blessing: cells[2] ? cells[2].trim() : '生日快乐！',
+                            time: cells[3] ? cells[3].trim() : ''
+                        });
+                    }
+                }
+                
+                blessings = newBlessings;
+                displayBlessings();
+                return true;
+                
+            } catch (error) {
+                console.error('获取数据失败:', error);
+                
+                // 如果获取失败，显示示例数据
+                showExampleData();
+                return false;
+            }
+        }
+        
+        // 显示示例数据（当无法获取腾讯文档数据时使用）
+        function showExampleData() {
+            blessings = [
+                {
+                    name: "我不是雨欣",
+                    impression: "黏人的小猫咪",
+                    blessing: "祝歆悦每天都有宝宝亲亲",
+                    time: "2025-12-14 22:33"
+                },
+                {
+                    name: "咕噜噜",
+                    impression: "可爱！温暖！",
+                    blessing: "歆悦歆悦，开心开心~",
+                    time: "2025-12-14 21:18"
+                },
+                {
+                    name: "666",
+                    impression: "全能",
+                    blessing: "生日快乐！新的一年也要过的快乐！",
+                    time: "2025-12-14 20:39"
+                },
+                {
+                    name: "wyyyyyyyyl",
+                    impression: "非常喜欢看帅哥！",
+                    blessing: "有数不清的帅哥追她~~~每天有看不完的帅哥！！！",
+                    time: "2025-12-14 20:38"
+                },
+                {
+                    name: "达利园",
+                    impression: "靠谱的xyjj～",
+                    blessing: "生日快乐呀xyjj！天天开心！",
+                    time: "2025-12-14 20:37"
+                }
+            ];
+            
+            displayBlessings();
+            
+            // 显示错误提示
+            blessingsContainer.innerHTML = `
+                <div class="error">
+                    <p>⚠️ 无法连接到腾讯文档，正在显示示例数据</p>
+                    <p>请检查：</p>
+                    <ol style="text-align: left; margin: 10px 0 10px 20px;">
+                        <li>是否正确设置了腾讯文档链接</li>
+                        <li>是否将文档权限设置为"任何人可查看"</li>
+                        <li>网络连接是否正常</li>
+                    </ol>
+                    <p style="margin-top: 15px;"><strong>当前是演示模式，数据不会自动更新</strong></p>
+                </div>
+                ${blessingsContainer.innerHTML}
+            `;
+        }
+        
+        // 刷新数据
+        async function refreshData() {
+            refreshButton.disabled = true;
+            refreshButton.textContent = '加载中...';
+            
+            await fetchBlessingsFromTencentDoc();
+            
+            refreshButton.disabled = false;
+            refreshButton.textContent = '🔄 刷新祝福';
+        }
+        
+        // 页面加载时获取数据
+        document.addEventListener('DOMContentLoaded', async () => {
+            await refreshData();
+            
+            // 设置自动刷新
+            setInterval(refreshData, AUTO_REFRESH_TIME);
+            
+            // 绑定刷新按钮事件
+            refreshButton.addEventListener('click', refreshData);
+            
+            // 添加键盘快捷键：按R键刷新
+            document.addEventListener('keydown', (event) => {
+                if (event.key === 'r' || event.key === 'R') {
+                    refreshData();
+                }
+            });
+        });
+        
+        // 显示当前时间
+        function updateCurrentTime() {
+            const now = new Date();
+            updateTimeElement.textContent = now.toLocaleTimeString('zh-CN', {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        
+        // 每秒更新时间
+        setInterval(updateCurrentTime, 1000);
+        updateCurrentTime();
+    </script>
+</body>
+</html>
