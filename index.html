@@ -1,571 +1,808 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>🎂 歆悦的生日蛋糕墙 🎂</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 歆悦的生日祝福墙</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --primary-color: #ff6b9d;
+            --secondary-color: #ffd166;
+            --background-color: #fff9f9;
+            --card-color: #ffffff;
+            --text-color: #333333;
+            --shadow: 0 5px 15px rgba(255, 107, 157, 0.1);
+        }
+        
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         
         body {
-            font-family: "Microsoft YaHei", "微软雅黑", sans-serif;
-            background: linear-gradient(135deg, #fff0f5 0%, #fffacd 100%);
+            font-family: 'Microsoft YaHei', 'Segoe UI', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
             line-height: 1.6;
             padding: 20px;
-            min-height: 100vh;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(255, 215, 102, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(255, 107, 157, 0.1) 0%, transparent 20%);
         }
         
         .container {
-            max-width: 800px;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 20px;
         }
         
         header {
             text-align: center;
-            margin-bottom: 40px;
-            padding: 20px;
-            background: white;
+            padding: 40px 20px;
+            margin-bottom: 30px;
+            background: linear-gradient(135deg, var(--primary-color), #ff8e53);
+            color: white;
             border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(255, 107, 158, 0.2);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "🎂";
+            font-size: 100px;
+            position: absolute;
+            opacity: 0.1;
+            top: 10px;
+            right: 20px;
         }
         
         h1 {
-            color: #ff6b9d;
-            font-size: 32px;
+            font-size: 2.8rem;
             margin-bottom: 10px;
-        }
-        
-        .cake-icon {
-            font-size: 48px;
-            margin: 20px 0;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
         }
         
         .subtitle {
-            color: #666;
-            font-size: 18px;
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
         
-        .cake-wall {
-            background: white;
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 25px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-box {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 12px 25px;
+            border-radius: 50px;
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .form-section, .blessings-section {
+            background-color: var(--card-color);
             border-radius: 20px;
             padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: var(--shadow);
         }
         
-        .cake-layer {
-            background: linear-gradient(135deg, #fff5f7 0%, #fff 100%);
-            border-left: 8px solid #ff6b9d;
-            border-radius: 12px;
+        .section-title {
+            color: var(--primary-color);
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #eee;
+            border-radius: 10px;
+            font-family: inherit;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        
+        input:focus, textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 157, 0.2);
+        }
+        
+        textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .submit-btn {
+            background: linear-gradient(135deg, var(--primary-color), #ff8e53);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 10px;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 107, 157, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .message {
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            text-align: center;
+            display: none;
+        }
+        
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+            display: block;
+        }
+        
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+            display: block;
+        }
+        
+        .blessings-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        
+        .blessing-card {
+            background: #fafafa;
+            border-left: 5px solid var(--primary-color);
+            border-radius: 10px;
             padding: 20px;
             margin-bottom: 20px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease;
+            transition: all 0.3s;
+            position: relative;
         }
         
-        .cake-layer:hover {
+        .blessing-card:hover {
             transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
         }
         
-        .layer-header {
+        .blessing-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px dashed #eee;
+            flex-wrap: wrap;
+            gap: 10px;
         }
         
-        .author {
-            color: #ff6b9d;
+        .blessing-author {
             font-weight: bold;
-            font-size: 18px;
+            color: var(--primary-color);
+            font-size: 1.1rem;
         }
         
-        .time {
-            color: #999;
-            font-size: 14px;
+        .blessing-time {
+            color: #888;
+            font-size: 0.9rem;
         }
         
-        .impression {
+        .blessing-impression {
             color: #666;
-            margin-bottom: 15px;
             font-style: italic;
+            margin-bottom: 10px;
+            padding-left: 10px;
+            border-left: 2px dashed #ddd;
         }
         
-        .blessing {
-            font-size: 18px;
-            color: #333;
-            line-height: 1.8;
+        .blessing-text {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            white-space: pre-line;
         }
         
-        .blessing::before {
+        .blessing-text::before {
             content: "💌 ";
         }
         
-        .add-section {
+        .empty-state {
             text-align: center;
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+            padding: 50px 20px;
+            color: #888;
         }
         
-        .add-btn {
-            display: inline-block;
-            background: linear-gradient(135deg, #ff6b9d 0%, #ff8e53 100%);
-            color: white;
-            border: none;
-            padding: 15px 40px;
-            font-size: 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            margin: 20px 0;
-            cursor: pointer;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        
-        .add-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(255, 107, 157, 0.3);
-        }
-        
-        .instructions {
-            background: white;
-            border-radius: 20px;
-            padding: 25px;
-            margin-top: 30px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
-        }
-        
-        .instructions h3 {
-            color: #ff6b9d;
+        .empty-state i {
+            font-size: 3rem;
             margin-bottom: 15px;
-            font-size: 22px;
+            color: #ddd;
         }
         
-        ol {
-            padding-left: 25px;
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
-        }
-        
-        li {
-            margin-bottom: 10px;
-            font-size: 16px;
-            color: #555;
-        }
-        
-        .counter {
-            background: #ff6b9d;
-            color: white;
-            padding: 10px 20px;
-            border-radius: 30px;
-            display: inline-block;
-            margin: 15px 0;
-            font-size: 18px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .refresh-btn {
-            background: #4CAF50;
-            color: white;
+            background: #f0f0f0;
             border: none;
             padding: 10px 20px;
-            border-radius: 20px;
+            border-radius: 50px;
             cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-            transition: background 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s;
         }
         
         .refresh-btn:hover {
-            background: #45a049;
+            background: #e0e0e0;
+        }
+        
+        .auto-refresh-status {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .blink {
+            animation: blink 1s infinite;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
         
         footer {
             text-align: center;
-            color: #999;
-            margin-top: 40px;
-            padding-top: 20px;
+            padding: 30px 20px;
+            color: #888;
+            font-size: 0.9rem;
             border-top: 1px solid #eee;
-            font-size: 14px;
+            margin-top: 40px;
         }
         
-        @media (max-width: 600px) {
-            .container {
-                padding: 10px;
-            }
-            
-            h1 {
-                font-size: 24px;
-            }
-            
-            .cake-icon {
-                font-size: 36px;
-            }
-            
-            .add-btn {
-                padding: 12px 30px;
-                font-size: 18px;
-            }
-            
-            .layer-header {
-                flex-direction: column;
-                align-items: flex-start;
-            }
-            
-            .time {
-                margin-top: 5px;
-            }
+        .security-warning {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            font-size: 0.9rem;
+        }
+        
+        .security-warning h3 {
+            color: #856404;
+            margin-bottom: 10px;
         }
         
         .loading {
             text-align: center;
-            padding: 40px;
-            color: #999;
+            padding: 30px;
+            color: #888;
         }
         
-        .error {
-            background: #ffebee;
-            color: #c62828;
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
+        .pulse {
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.6; }
+            50% { opacity: 1; }
+            100% { opacity: 0.6; }
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>🎂 歆悦的生日蛋糕墙 🎂</h1>
-            <div class="cake-icon">🍰🍰🍰</div>
-            <p class="subtitle">每一层蛋糕，都是一份温暖的祝福</p>
+            <h1>🎂 歆悦的生日祝福墙</h1>
+            <p class="subtitle">每一份祝福都是特别的礼物，直接在这里写下你想对她说的话吧！</p>
+            <div class="stats">
+                <div class="stat-box">
+                    <i class="fas fa-heart"></i>
+                    <span id="blessingsCount">0</span> 份祝福
+                </div>
+                <div class="stat-box">
+                    <i class="fas fa-sync-alt"></i>
+                    <span id="lastUpdate">刚刚</span>
+                </div>
+                <div class="stat-box auto-refresh-status">
+                    <i class="fas fa-circle blink" style="color: #4CAF50;"></i>
+                    自动更新已开启
+                </div>
+            </div>
         </header>
         
-        <div class="cake-wall">
-            <h2 style="color: #ff6b9d; margin-bottom: 25px; text-align: center;">✨ 大家的祝福 ✨</h2>
-            <div id="blessings-container">
-                <div class="loading">
-                    <p>正在加载大家的祝福...</p>
-                    <p style="margin-top: 20px; font-size: 24px;">⏳</p>
+        <div class="content">
+            <section class="form-section">
+                <h2 class="section-title"><i class="fas fa-edit"></i> 写下你的祝福</h2>
+                <form id="blessingForm">
+                    <div class="form-group">
+                        <label for="userName"><i class="fas fa-user"></i> 你的昵称 *</label>
+                        <input type="text" id="userName" placeholder="例如：达利园" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userImpression"><i class="fas fa-star"></i> 你对歆悦的印象</label>
+                        <input type="text" id="userImpression" placeholder="例如：可爱、温暖、全能...">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userBlessing"><i class="fas fa-comment-dots"></i> 生日祝福 *</label>
+                        <textarea id="userBlessing" placeholder="写下你最想对歆悦说的话..." required></textarea>
+                    </div>
+                    
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fas fa-paper-plane"></i> 提交祝福
+                    </button>
+                </form>
+                
+                <div class="message" id="formMessage"></div>
+            </section>
+            
+            <section class="blessings-section">
+                <div class="controls">
+                    <h2 class="section-title"><i class="fas fa-birthday-cake"></i> 大家的祝福</h2>
+                    <button class="refresh-btn" id="refreshBtn">
+                        <i class="fas fa-redo"></i> 刷新祝福
+                    </button>
                 </div>
-            </div>
+                
+                <div class="blessings-container" id="blessingsContainer">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin pulse" style="font-size: 2rem; margin-bottom: 15px;"></i>
+                        <p>正在加载祝福...</p>
+                    </div>
+                </div>
+            </section>
         </div>
         
-        <div class="add-section">
-            <h2 style="color: #ff6b9d; margin-bottom: 20px;">🎁 添加你的祝福</h2>
-            <p style="margin-bottom: 20px; color: #666;">点击下方按钮，为歆悦的生日蛋糕添加一层甜蜜的祝福吧！</p>
-            
-            <!-- 这里要替换成你的腾讯文档编辑链接 -->
-            <a href="YOUR_EDIT_LINK_HERE" class="add-btn" target="_blank">
-                ✨ 我要添加祝福 ✨
-            </a>
-            
-            <p style="margin-top: 20px; color: #888; font-size: 14px;">
-                （点击后会在新窗口打开祝福收集表，填写后记得刷新本页面查看）
-            </p>
-        </div>
-        
-        <div class="instructions">
-            <h3>📝 使用说明</h3>
-            <ol>
-                <li>点击上方粉色按钮，在表格中添加你的祝福</li>
-                <li>填写完成后，点击下方“刷新祝福”按钮更新显示</li>
-                <li>也可以直接刷新整个页面（按F5或浏览器刷新按钮）</li>
-                <li>将本页面链接分享给其他同学，一起为歆悦送祝福</li>
-            </ol>
-            
-            <div style="text-align: center; margin: 25px 0;">
-                <div class="counter">
-                    已有 <span id="blessing-count">0</span> 个祝福
-                </div>
-                <br>
-                <button class="refresh-btn" id="refresh-btn">
-                    🔄 刷新祝福
-                </button>
-            </div>
-            
-            <div id="data-source-info" style="background: #f9f9f9; padding: 15px; border-radius: 10px; margin-top: 20px;">
-                <p style="color: #666; font-size: 14px; margin-bottom: 10px;">
-                    <strong>数据来源：</strong>腾讯文档表格
-                </p>
-                <p style="color: #888; font-size: 12px;">
-                    如需修改表格链接，请联系页面管理员
-                </p>
-            </div>
+        <div class="security-warning">
+            <h3><i class="fas fa-exclamation-triangle"></i> 重要安全提示</h3>
+            <p>1. 此页面使用GitHub Token直接操作你的仓库。如果将此文件公开部署，Token可能会暴露。</p>
+            <p>2. <strong>建议仅在测试后重置Token</strong>：测试成功后，请立即到GitHub的 Settings → Developer settings → Personal access tokens 中重置（Revoke）使用的Token。</p>
+            <p>3. 这样页面将保留展示功能，但无法提交新祝福，适合一次性活动使用。</p>
         </div>
         
         <footer>
-            <p>🎉 祝歆悦同学生日快乐！ 🎉</p>
-            <p style="margin-top: 10px;">制作：班级同学 | 更新于 <span id="update-time">-</span></p>
+            <p>❤️ 为歆悦制作的生日祝福墙 | 数据实时保存与同步 | 最后更新: <span id="currentTime">-</span></p>
+            <p style="margin-top: 10px; font-size: 0.8rem;">祝福提交后，页面将自动刷新显示最新内容</p>
         </footer>
     </div>
-    
+
     <script>
         // ============================================
-        // 🔧 这里是需要你修改的配置部分
+        // 🔧 配置区域：请修改以下信息
+        // ============================================
+        const CONFIG = {
+            // 你的GitHub用户名（不是邮箱）
+            GITHUB_USER: 'fzh-zxn',
+            // 存放此页面的仓库名
+            GITHUB_REPO: 'brithday-wall',
+            // 你的GitHub个人访问令牌（Personal Access Token）
+            // 获取方式：GitHub → Settings → Developer settings → Personal access tokens → Generate new token (classic)
+            // 权限需要勾选：repo (全部)
+            // ⚠️ 警告：部署后请立即重置此Token，以防泄露！
+            GITHUB_TOKEN: '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',
+            // 存储祝福数据的JSON文件路径
+            DATA_FILE_PATH: 'data.json',
+            // 自动刷新间隔（毫秒）
+            AUTO_REFRESH_INTERVAL: 30000, // 30秒
+            // 每页显示的最大祝福数量
+            MAX_BLESSINGS: 100
+        };
+        // ============================================
+        // 🎂 以下为程序代码，一般无需修改
         // ============================================
         
-        // 你的腾讯文档“查看链接”（必须修改！）
-        // 获取方法：打开腾讯文档 → 分享 → 选择“任何人可查看” → 复制链接
-        const TEN_CENT_DOC_VIEW_URL = "https://docs.qq.com/sheet/DU0tzQVp3V0pPdGtB?tab=BB08J2";
-        
-        // 你的腾讯文档“编辑链接”（必须修改！）
-        // 获取方法：打开腾讯文档 → 分享 → 选择“任何人可编辑” → 复制链接
-        const TEN_CENT_DOC_EDIT_URL = "https://docs.qq.com/sheet/DU0tzQVp3V0pPdGtB?tab=BB08J2";
-        
-        // 自动刷新时间（单位：毫秒），默认30秒刷新一次
-        const AUTO_REFRESH_TIME = 30000;
-        
-        // ============================================
-        // 🎂 以下是程序代码，一般不需要修改
-        // ============================================
-        
-        // 更新页面上的编辑链接
-        document.querySelector('.add-btn').href = TEN_CENT_DOC_EDIT_URL;
-        
-        // 获取页面元素
-        const blessingsContainer = document.getElementById('blessings-container');
-        const blessingCountElement = document.getElementById('blessing-count');
-        const refreshButton = document.getElementById('refresh-btn');
-        const updateTimeElement = document.getElementById('update-time');
-        
-        // 祝福数据
+        // 全局变量
         let blessings = [];
+        let currentBlessingsCount = 0;
+        let autoRefreshInterval;
         
-        // 格式化时间
-        function formatTime(timeStr) {
-            if (!timeStr) return '刚刚';
-            
-            // 如果是今天，显示时间
+        // DOM 元素
+        const blessingsContainer = document.getElementById('blessingsContainer');
+        const blessingsCountEl = document.getElementById('blessingsCount');
+        const lastUpdateEl = document.getElementById('lastUpdate');
+        const currentTimeEl = document.getElementById('currentTime');
+        const form = document.getElementById('blessingForm');
+        const formMessage = document.getElementById('formMessage');
+        const submitBtn = document.getElementById('submitBtn');
+        const refreshBtn = document.getElementById('refreshBtn');
+        
+        // 工具函数：格式化时间
+        function formatTime(dateString) {
+            const date = new Date(dateString);
             const now = new Date();
-            const date = new Date(timeStr);
+            const diffMs = now - date;
+            const diffMins = Math.floor(diffMs / (1000 * 60));
+            const diffHours = Math.floor(diffMs / (1000 * 60 * 60));
             
-            if (isNaN(date.getTime())) {
-                // 如果不是有效日期，直接返回
-                return timeStr;
-            }
-            
-            // 计算时间差（分钟）
-            const diffMinutes = Math.floor((now - date) / (1000 * 60));
-            
-            if (diffMinutes < 1) {
+            if (diffMins < 1) {
                 return '刚刚';
-            } else if (diffMinutes < 60) {
-                return `${diffMinutes}分钟前`;
-            } else if (diffMinutes < 24 * 60) {
-                const hours = Math.floor(diffMinutes / 60);
-                return `${hours}小时前`;
+            } else if (diffMins < 60) {
+                return `${diffMins}分钟前`;
+            } else if (diffHours < 24) {
+                return `${diffHours}小时前`;
             } else {
-                // 显示日期
                 return date.toLocaleDateString('zh-CN', {
                     month: 'short',
                     day: 'numeric',
                     hour: '2-digit',
                     minute: '2-digit'
-                }).replace('上午', 'AM').replace('下午', 'PM');
+                });
             }
         }
         
-        // 显示祝福
-        function displayBlessings() {
+        // 工具函数：显示消息
+        function showMessage(text, type = 'success') {
+            formMessage.textContent = text;
+            formMessage.className = `message ${type}`;
+            formMessage.style.display = 'block';
+            
+            if (type === 'success') {
+                setTimeout(() => {
+                    formMessage.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // 从GitHub获取祝福数据
+        async function fetchBlessingsFromGitHub() {
+            try {
+                // 使用GitHub API获取文件内容
+                const apiUrl = `https://api.github.com/repos/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/contents/${CONFIG.DATA_FILE_PATH}`;
+                
+                const response = await fetch(apiUrl, {
+                    headers: {
+                        'Authorization': `token ${CONFIG.GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                
+                if (!response.ok) {
+                    // 如果文件不存在，创建空数组
+                    if (response.status === 404) {
+                        return [];
+                    }
+                    throw new Error(`GitHub API错误: ${response.status}`);
+                }
+                
+                const fileData = await response.json();
+                // GitHub API返回的内容是Base64编码的
+                const content = atob(fileData.content);
+                return JSON.parse(content);
+                
+            } catch (error) {
+                console.error('获取数据失败:', error);
+                // 尝试从raw地址获取（只读）
+                try {
+                    const rawUrl = `https://raw.githubusercontent.com/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/main/${CONFIG.DATA_FILE_PATH}`;
+                    const rawResponse = await fetch(rawUrl + '?t=' + Date.now());
+                    if (rawResponse.ok) {
+                        return await rawResponse.json();
+                    }
+                } catch (rawError) {
+                    console.error('从raw地址获取也失败:', rawError);
+                }
+                
+                // 如果都失败了，返回空数组
+                return [];
+            }
+        }
+        
+        // 保存祝福数据到GitHub
+        async function saveBlessingsToGitHub(newBlessings) {
+            try {
+                // 首先获取当前文件信息（为了获取sha）
+                const getUrl = `https://api.github.com/repos/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/contents/${CONFIG.DATA_FILE_PATH}`;
+                const getResponse = await fetch(getUrl, {
+                    headers: {
+                        'Authorization': `token ${CONFIG.GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json'
+                    }
+                });
+                
+                let sha = null;
+                if (getResponse.ok) {
+                    const fileData = await getResponse.json();
+                    sha = fileData.sha;
+                }
+                
+                // 准备更新内容
+                const content = JSON.stringify(newBlessings, null, 2);
+                const contentBase64 = btoa(unescape(encodeURIComponent(content)));
+                
+                // 更新文件
+                const updateUrl = `https://api.github.com/repos/${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}/contents/${CONFIG.DATA_FILE_PATH}`;
+                const updateResponse = await fetch(updateUrl, {
+                    method: 'PUT',
+                    headers: {
+                        'Authorization': `token ${CONFIG.GITHUB_TOKEN}`,
+                        'Accept': 'application/vnd.github.v3+json',
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        message: `添加新祝福 - ${new Date().toLocaleString('zh-CN')}`,
+                        content: contentBase64,
+                        sha: sha
+                    })
+                });
+                
+                if (!updateResponse.ok) {
+                    const errorText = await updateResponse.text();
+                    throw new Error(`更新失败: ${updateResponse.status} - ${errorText}`);
+                }
+                
+                return true;
+            } catch (error) {
+                console.error('保存数据失败:', error);
+                throw error;
+            }
+        }
+        
+        // 添加新祝福
+        async function addNewBlessing(name, impression, blessingText) {
+            // 创建新祝福对象
+            const newBlessing = {
+                id: Date.now(), // 使用时间戳作为ID
+                name: name.trim(),
+                impression: impression ? impression.trim() : '',
+                blessing: blessingText.trim(),
+                time: new Date().toISOString()
+            };
+            
+            // 添加到数组开头
+            blessings.unshift(newBlessing);
+            
+            // 只保留最近的一定数量的祝福
+            if (blessings.length > CONFIG.MAX_BLESSINGS) {
+                blessings = blessings.slice(0, CONFIG.MAX_BLESSINGS);
+            }
+            
+            // 保存到GitHub
+            await saveBlessingsToGitHub(blessings);
+            
+            return newBlessing;
+        }
+        
+        // 渲染祝福列表
+        function renderBlessings() {
             if (blessings.length === 0) {
                 blessingsContainer.innerHTML = `
-                    <div class="error">
-                        <p>暂时还没有祝福哦~</p>
-                        <p>点击上方按钮，添加第一个祝福吧！</p>
+                    <div class="empty-state">
+                        <i class="fas fa-gift"></i>
+                        <h3>还没有祝福哦</h3>
+                        <p>快来写下第一个祝福吧！</p>
                     </div>
                 `;
-                blessingCountElement.textContent = '0';
+                blessingsCountEl.textContent = '0';
                 return;
             }
             
             let html = '';
-            
-            // 按时间倒序排列（最新的在最上面）
-            const sortedBlessings = [...blessings].sort((a, b) => {
-                return new Date(b.time || 0) - new Date(a.time || 0);
-            });
-            
-            sortedBlessings.forEach((item, index) => {
+            blessings.forEach(blessing => {
                 html += `
-                <div class="cake-layer">
-                    <div class="layer-header">
-                        <div class="author">${item.name || '匿名同学'}</div>
-                        <div class="time">${formatTime(item.time)}</div>
+                <div class="blessing-card">
+                    <div class="blessing-header">
+                        <div class="blessing-author">${escapeHtml(blessing.name)}</div>
+                        <div class="blessing-time">${formatTime(blessing.time)}</div>
                     </div>
-                    <div class="impression">
-                        <strong>印象：</strong>${item.impression || '温暖的同学'}
-                    </div>
-                    <div class="blessing">
-                        ${item.blessing || '生日快乐！'}
-                    </div>
+                    ${blessing.impression ? `<div class="blessing-impression">印象：${escapeHtml(blessing.impression)}</div>` : ''}
+                    <div class="blessing-text">${escapeHtml(blessing.blessing)}</div>
                 </div>
                 `;
             });
             
             blessingsContainer.innerHTML = html;
-            blessingCountElement.textContent = blessings.length;
+            blessingsCountEl.textContent = blessings.length;
+            currentBlessingsCount = blessings.length;
             
             // 更新最后刷新时间
-            const now = new Date();
-            updateTimeElement.textContent = now.toLocaleTimeString('zh-CN', {
-                hour: '2-digit',
-                minute: '2-digit',
-                second: '2-digit'
-            });
+            lastUpdateEl.textContent = '刚刚';
+            updateCurrentTime();
         }
         
-        // 从腾讯文档获取数据（简化版）
-         async function fetchBlessingsFromTencentDoc() {
+        // 加载祝福数据
+        async function loadBlessings() {
             try {
-                // 方法1：尝试使用腾讯文档的导出功能
-                // 将查看链接转换为导出链接
-                const exportUrl = TEN_CENT_DOC_VIEW_URL.replace('/sheet/', '/op/sheet/export?format=csv&id=') + '&share=1';
-                
-                const response = await fetch(exportUrl);
-                
-                if (!response.ok) {
-                    throw new Error('无法连接到腾讯文档');
-                }
-                
-                const csvText = await response.text();
-                
-                // 解析CSV数据（简单解析）
-                const lines = csvText.split('\n').filter(line => line.trim() !== '');
-                const newBlessings = [];
-                
-                // 第一行是表头，从第二行开始
-                for (let i = 1; i < lines.length; i++) {
-                    const cells = lines[i].split(',');
-                    
-                    // 简单处理：前4列分别是昵称、印象、祝福语、时间
-                    if (cells.length >= 3) {
-                        newBlessings.push({
-                            name: cells[0] ? cells[0].trim() : '匿名',
-                            impression: cells[1] ? cells[1].trim() : '',
-                            blessing: cells[2] ? cells[2].trim() : '生日快乐！',
-                            time: cells[3] ? cells[3].trim() : ''
-                        });
-                    }
-                }
-                
-                blessings = newBlessings;
-                displayBlessings();
-                return true;
-                
+                blessings = await fetchBlessingsFromGitHub();
+                renderBlessings();
             } catch (error) {
-                console.error('获取数据失败:', error);
-                
-                // 如果获取失败，显示示例数据
-                showExampleData();
-                return false;
+                console.error('加载祝福失败:', error);
+                showMessage('加载祝福失败，请刷新页面重试', 'error');
             }
         }
-
         
-        // 显示示例数据（当无法获取腾讯文档数据时使用）
-        function showExampleData() {
-            blessings = [
-                {
-                    name: "我不是雨欣",
-                    impression: "黏人的小猫咪",
-                    blessing: "祝歆悦每天都有宝宝亲亲",
-                    time: "2025-12-14 22:33"
-                },
-                {
-                    name: "咕噜噜",
-                    impression: "可爱！温暖！",
-                    blessing: "歆悦歆悦，开心开心~",
-                    time: "2025-12-14 21:18"
-                },
-                {
-                    name: "666",
-                    impression: "全能",
-                    blessing: "生日快乐！新的一年也要过的快乐！",
-                    time: "2025-12-14 20:39"
-                },
-                {
-                    name: "wyyyyyyyyl",
-                    impression: "非常喜欢看帅哥！",
-                    blessing: "有数不清的帅哥追她~~~每天有看不完的帅哥！！！",
-                    time: "2025-12-14 20:38"
-                },
-                {
-                    name: "达利园",
-                    impression: "靠谱的xyjj～",
-                    blessing: "生日快乐呀xyjj！天天开心！",
-                    time: "2025-12-14 20:37"
-                }
-            ];
+        // 处理表单提交
+        async function handleFormSubmit(event) {
+            event.preventDefault();
             
-            displayBlessings();
+            const name = document.getElementById('userName').value.trim();
+            const impression = document.getElementById('userImpression').value.trim();
+            const blessingText = document.getElementById('userBlessing').value.trim();
             
-            // 显示错误提示
-            blessingsContainer.innerHTML = `
-                <div class="error">
-                    <p>⚠️ 无法连接到腾讯文档，正在显示示例数据</p>
-                    <p>请检查：</p>
-                    <ol style="text-align: left; margin: 10px 0 10px 20px;">
-                        <li>是否正确设置了腾讯文档链接</li>
-                        <li>是否将文档权限设置为"任何人可查看"</li>
-                        <li>网络连接是否正常</li>
-                    </ol>
-                    <p style="margin-top: 15px;"><strong>当前是演示模式，数据不会自动更新</strong></p>
-                </div>
-                ${blessingsContainer.innerHTML}
-            `;
+            if (!name) {
+                showMessage('请输入你的昵称', 'error');
+                return;
+            }
+            
+            if (!blessingText) {
+                showMessage('请输入祝福内容', 'error');
+                return;
+            }
+            
+            // 禁用提交按钮，防止重复提交
+            const originalBtnText = submitBtn.innerHTML;
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 提交中...';
+            
+            try {
+                await addNewBlessing(name, impression, blessingText);
+                
+                // 清空表单
+                form.reset();
+                
+                // 重新渲染祝福列表
+                renderBlessings();
+                
+                // 显示成功消息
+                showMessage(`✅ 感谢 ${name} 的祝福！已成功提交。`);
+                
+            } catch (error) {
+                console.error('提交失败:', error);
+                showMessage('提交失败，请检查网络或Token设置', 'error');
+            } finally {
+                // 恢复提交按钮
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalBtnText;
+            }
         }
         
-        // 刷新数据
-        async function refreshData() {
-            refreshButton.disabled = true;
-            refreshButton.textContent = '加载中...';
+        // 手动刷新祝福
+        async function handleManualRefresh() {
+            const originalBtnText = refreshBtn.innerHTML;
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> 刷新中...';
             
-            await fetchBlessingsFromTencentDoc();
+            await loadBlessings();
             
-            refreshButton.disabled = false;
-            refreshButton.textContent = '🔄 刷新祝福';
+            refreshBtn.disabled = false;
+            refreshBtn.innerHTML = originalBtnText;
         }
         
-        // 页面加载时获取数据
-        document.addEventListener('DOMContentLoaded', async () => {
-            await refreshData();
-            
-            // 设置自动刷新
-            setInterval(refreshData, AUTO_REFRESH_TIME);
-            
-            // 绑定刷新按钮事件
-            refreshButton.addEventListener('click', refreshData);
-            
-            // 添加键盘快捷键：按R键刷新
-            document.addEventListener('keydown', (event) => {
-                if (event.key === 'r' || event.key === 'R') {
-                    refreshData();
-                }
-            });
-        });
-        
-        // 显示当前时间
+        // 更新当前时间显示
         function updateCurrentTime() {
             const now = new Date();
-            updateTimeElement.textContent = now.toLocaleTimeString('zh-CN', {
+            currentTimeEl.textContent = now.toLocaleTimeString('zh-CN', {
                 hour: '2-digit',
                 minute: '2-digit',
                 second: '2-digit'
             });
         }
         
-        // 每秒更新时间
-        setInterval(updateCurrentTime, 1000);
-        updateCurrentTime();
+        // 启动自动刷新
+        function startAutoRefresh() {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+            
+            autoRefreshInterval = setInterval(async () => {
+                // 检查祝福数量是否有变化
+                const oldCount = currentBlessingsCount;
+                await loadBlessings();
+                
+                if (currentBlessingsCount > oldCount) {
+                    // 有新的祝福，显示通知
+                    lastUpdateEl.innerHTML = `<span style="color: #4CAF50;">有${currentBlessingsCount - oldCount}条新祝福</span>`;
+                } else if (currentBlessingsCount < oldCount) {
+                    // 祝福数量减少（理论上不会发生）
+                    loadBlessings();
+                }
+            }, CONFIG.AUTO_REFRESH_INTERVAL);
+        }
+        
+        // 简单的HTML转义，防止XSS
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+        
+        // 初始化页面
+        async function initPage() {
+            // 设置当前时间
+            updateCurrentTime();
+            setInterval(updateCurrentTime, 1000);
+            
+            // 绑定事件
+            form.addEventListener('submit', handleFormSubmit);
+            refreshBtn.addEventListener('click', handleManualRefresh);
+            
+            // 加载初始数据
+            await loadBlessings();
+            
+            // 启动自动刷新
+            startAutoRefresh();
+            
+            // 检查Token是否已配置
+            if (CONFIG.GITHUB_TOKEN.includes('你的GitHub_Token')) {
+                showMessage('⚠️ 请先配置GitHub Token，否则无法提交祝福！', 'error');
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '<i class="fas fa-exclamation-triangle"></i> 需要配置Token';
+            }
+        }
+        
+        // 页面加载完成后初始化
+        document.addEventListener('DOMContentLoaded', initPage);
     </script>
 </body>
 </html>
+       
+
 
 
