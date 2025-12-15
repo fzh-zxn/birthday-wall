@@ -422,63 +422,52 @@
         }
         
         // 从腾讯文档获取数据（简化版）
-        async function fetchBlessingsFromTencentDoc() {
-    try {
-        // 从你的腾讯文档链接中提取关键信息
-        // 假设你的链接是：https://docs.qq.com/sheet/DU0tzQVp3VQpPdGtB?tab=BB0832
-        const url = new URL(TEN_CENT_DOC_VIEW_URL);
-        
-        // 提取路径中的表格ID（最后一部分）
-        const pathParts = url.pathname.split('/');
-        const sheetId = pathParts[pathParts.length - 1];
-        
-        // 提取tab参数
-        const tab = url.searchParams.get('tab') || 'BB08J2';
-        
-        // 构建正确的导出链接
-        const exportUrl = `https://docs.qq.com/op/sheet/export?format=csv&id=${sheetId}&tab=${tab}&share=1`;
-        
-        console.log('正在尝试访问:', exportUrl);
-        
-        // 使用一个CORS代理来绕过跨域限制
-        const corsProxy = 'https://corsproxy.io/?';
-        const response = await fetch(corsProxy + encodeURIComponent(exportUrl));
-        
-        if (!response.ok) {
-            throw new Error(`HTTP错误: ${response.status}`);
-        }
-        
-        const csvText = await response.text();
-        
-        // 解析CSV数据
-        const lines = csvText.split('\n').filter(line => line.trim() !== '');
-        const newBlessings = [];
-        
-        // 跳过表头行
-        for (let i = 1; i < lines.length; i++) {
-            // 简单的CSV解析（如果内容包含逗号，需要更复杂的解析）
-            const cells = lines[i].split(',');
-            
-            if (cells.length >= 3) {
-                newBlessings.push({
-                    name: cells[0] ? cells[0].replace(/"/g, '').trim() : '匿名',
-                    impression: cells[1] ? cells[1].replace(/"/g, '').trim() : '',
-                    blessing: cells[2] ? cells[2].replace(/"/g, '').trim() : '生日快乐！',
-                    time: cells[3] ? cells[3].replace(/"/g, '').trim() : ''
-                });
+         async function fetchBlessingsFromTencentDoc() {
+            try {
+                // 方法1：尝试使用腾讯文档的导出功能
+                // 将查看链接转换为导出链接
+                const exportUrl = TEN_CENT_DOC_VIEW_URL.replace('/sheet/', '/op/sheet/export?format=csv&id=') + '&share=1';
+                
+                const response = await fetch(exportUrl);
+                
+                if (!response.ok) {
+                    throw new Error('无法连接到腾讯文档');
+                }
+                
+                const csvText = await response.text();
+                
+                // 解析CSV数据（简单解析）
+                const lines = csvText.split('\n').filter(line => line.trim() !== '');
+                const newBlessings = [];
+                
+                // 第一行是表头，从第二行开始
+                for (let i = 1; i < lines.length; i++) {
+                    const cells = lines[i].split(',');
+                    
+                    // 简单处理：前4列分别是昵称、印象、祝福语、时间
+                    if (cells.length >= 3) {
+                        newBlessings.push({
+                            name: cells[0] ? cells[0].trim() : '匿名',
+                            impression: cells[1] ? cells[1].trim() : '',
+                            blessing: cells[2] ? cells[2].trim() : '生日快乐！',
+                            time: cells[3] ? cells[3].trim() : ''
+                        });
+                    }
+                }
+                
+                blessings = newBlessings;
+                displayBlessings();
+                return true;
+                
+            } catch (error) {
+                console.error('获取数据失败:', error);
+                
+                // 如果获取失败，显示示例数据
+                showExampleData();
+                return false;
             }
         }
-        
-        blessings = newBlessings;
-        displayBlessings();
-        return true;
-        
-    } catch (error) {
-        console.error('获取数据失败:', error);
-        showExampleData();
-        return false;
-    }
-}
+
         
         // 显示示例数据（当无法获取腾讯文档数据时使用）
         function showExampleData() {
@@ -578,4 +567,5 @@
     </script>
 </body>
 </html>
+
 
